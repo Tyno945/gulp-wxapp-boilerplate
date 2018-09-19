@@ -73,4 +73,15 @@ npm run build
 4. 使用 jdists 开发时候使用本地的 `api-mock`，生产打包则暴漏真正的`api.js`（详见：`pages/index/index.js`）
 
 
+## 环境判断
+
+[从命令行传递参数](https://www.gulpjs.com.cn/docs/recipes/pass-arguments-from-cli/)
+[gulp-environments](https://www.npmjs.com/package/gulp-environments)
+[使用gulp进行简单的分环境配置](https://segmentfault.com/a/1190000004138375?_ea=503865)
+
+
+## bug
+
+1. `npm run build`失败，修改`"build": "gulp build --env prod"`。
+2. `npm run server`失败，原因是缺少"cheerio"模块，安装即可
 

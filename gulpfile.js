@@ -25,7 +25,8 @@ const jdists = require('gulp-jdists')
 
 const src = './client'
 const dist = './dist'
-const isProd = argv.type === 'prod'
+// const isProd = argv.type === 'prod'
+const isProd = argv.env === 'prod'  // 环境判断修改
 
 const handleError = (err) => {
   console.log('\n')
