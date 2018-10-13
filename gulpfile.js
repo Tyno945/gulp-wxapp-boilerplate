@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const gulp = require('gulp')
 const rename = require('gulp-rename')
 const del = require('del')
@@ -22,6 +25,10 @@ const runSequence = require('run-sequence')
 const sourcemaps = require('gulp-sourcemaps')
 const filter = require('gulp-filter')
 const jdists = require('gulp-jdists')
+const util = require('gulp-util')
+// 引入生成文件模块
+const inquirer = require('inquirer')
+const generatePage = require('generate-weapp-page')
 
 const src = './client'
 const dist = './dist'
@@ -35,6 +42,46 @@ const handleError = (err) => {
   log('lineNumber: ' + colors.red(err.lineNumber))
   log('message: ' + err.message)
   log('plugin: ' + colors.yellow(err.plugin))
+}
+
+// utils functions
+
+/**
+ * 生成小程序基础文件页面
+ * @param  {Object} options 用户选择对象
+ * @return {Array}        生成的文件集
+ */
+function generateFile (options) {
+  const files = generatePage({
+    root: path.resolve(__dirname, './client/pages/'),
+    name: options.pageName,
+    less: options.styleType === 'less',
+    scss: options.styleType === 'scss',
+    css: options.styleType === 'css',
+    json: options.needConfig
+  })
+  files.forEach && files.forEach(file => util.log('[generate]', file))
+  return files
+}
+
+/**
+ * 将文件页面添加到app.json配置
+ * @param  {Object} options 用户选择对象
+ * @return
+ */
+function generateJson (options) {
+  const filename = path.resolve(__dirname, 'client/app.json')
+  const now = fs.readFileSync(filename, 'utf8')
+  const temp = now.split('\n    // Dont remove this comment')
+  if (temp.length !== 2) {
+    return util.log('[generate]', 'Append json failed')
+  }
+  const result = `${temp[0].trim()},
+    "pages/${options.pageName}/${options.pageName}"
+    // Dont remove this comment
+  ${temp[1].trim()}
+`
+  fs.writeFileSync(filename, result)
 }
 
 // task start
@@ -156,4 +203,39 @@ gulp.task('watch:cloud', () => {
 
 gulp.task('cloud:dev', () => {
   runSequence('cloud', 'watch:cloud')
+})
+
+
+/**
+ * Generate new page
+ */
+gulp.task('generate', next => {
+  inquirer.prompt([
+    {
+      type: 'input',
+      name: 'pageName',
+      message: 'Input the page name',
+      default: 'index'
+    },
+    {
+      type: 'confirm',
+      name: 'needConfig',
+      message: 'Do you need a configuration file',
+      default: false
+    },
+    {
+      type: 'list',
+      name: 'styleType',
+      message: 'Select a style framework',
+      choices: ['scss', 'less', 'css'],
+      default: 'scss'
+    }
+  ])
+  .then(options => {
+    const res = generateFile(options)
+    if (res) generateJson(options)
+  })
+  .catch(err => {
+    throw new util.PluginError('generate', err)
+  })
 })
