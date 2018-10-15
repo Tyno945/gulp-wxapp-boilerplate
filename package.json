@@ -1,7 +1,7 @@
 {
-  "name": "gulp-wxapp",
+  "name": "felix-wxapp-boilerplate",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Felix boilerplate application for wechat weapp runtime",
   "scripts": {
     "server": "nodemon ./server/index.js",
     "start": "gulp watch",
@@ -26,8 +26,24 @@
   "engines": {
     "node": ">=8"
   },
-  "author": "ksky521@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tyno945/gulp-wxapp-boilerplate.git"
+  },
+  "keywords": [
+    "weapp",
+    "wxapp",
+    "boilerplate",
+    "wechat",
+    "weixin",
+    "xiaochengxu"
+  ],
+  "author": "441356517@qq.com",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Tyno945/gulp-wxapp-boilerplate/issues"
+  },
+  "homepage": "https://github.com/Tyno945/gulp-wxapp-boilerplate#readme",
   "devDependencies": {
     "ansi-colors": "^2.0.5",
     "babel-core": "^6.26.3",
@@ -42,6 +58,7 @@
     "gulp-cssnano": "^2.1.3",
     "gulp-filter": "^5.1.0",
     "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^3.0.3",
     "gulp-jdists": "^2.2.3",
     "gulp-jsonminify": "^1.1.0",
     "gulp-postcss": "^7.0.1",

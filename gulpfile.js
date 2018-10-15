@@ -26,6 +26,7 @@ const sourcemaps = require('gulp-sourcemaps')
 const filter = require('gulp-filter')
 const jdists = require('gulp-jdists')
 const util = require('gulp-util')
+const imagemin = require('gulp-imagemin')
 // 引入生成文件模块
 const inquirer = require('inquirer')
 const generatePage = require('generate-weapp-page')
@@ -85,12 +86,19 @@ function generateJson (options) {
 }
 
 // task start
+
+/**
+ * Compile json source to distribution directory
+ */
 gulp.task('json', () => {
   return gulp.src(`${src}/**/*.json`)
     .pipe(jsonminify())
     .pipe(gulp.dest(dist))
 })
 
+/**
+ * Compile wxml source to distribution directory
+ */
 gulp.task('wxml', () => {
   return gulp
     .src(`${src}/**/*.wxml`)
@@ -105,10 +113,17 @@ gulp.task('wxml', () => {
     )
     .pipe(gulp.dest(dist))
 })
+
+/**
+ * Compile wxs source to distribution directory
+ */
 gulp.task('wxs', () => {
   return gulp.src(`${src}/**/*.wxs`).pipe(gulp.dest(dist))
 })
 
+/**
+ * Compile scss source to distribution directory
+ */
 gulp.task('wxss', () => {
   const combined = combiner.obj([
     gulp.src(`${src}/**/*.{wxss,scss}`),
@@ -127,10 +142,18 @@ gulp.task('wxss', () => {
   combined.on('error', handleError)
 })
 
+/**
+ * Compile img source to distribution directory
+ */
 gulp.task('images', () => {
-  return gulp.src(`${src}/images/**`).pipe(gulp.dest(`${dist}/images`))
+  return gulp.src(`${src}/images/**`)
+    .pipe(isProd ? imagemin() : through.obj())
+    .pipe(gulp.dest(`${dist}/images`))
 })
 
+/**
+ * Compile js source to distribution directory
+ */
 gulp.task('js', () => {
   const f = filter((file) => !/(mock|bluebird)/.test(file.path))
   gulp
@@ -162,6 +185,9 @@ gulp.task('js', () => {
     .pipe(gulp.dest(dist))
 })
 
+/**
+ * Watch source change
+ */
 gulp.task('watch', () => {
   ;['wxml', 'wxss', 'js', 'json', 'wxs'].forEach((v) => {
     gulp.watch(`${src}/**/*.${v}`, [v])
@@ -170,14 +196,23 @@ gulp.task('watch', () => {
   gulp.watch(`${src}/**/*.scss`, ['wxss'])
 })
 
+/**
+ * Clean distribution directory
+ */
 gulp.task('clean', () => {
   return del(['./dist/**'])
 })
 
+/**
+ * Dev
+ */
 gulp.task('dev', ['clean'], () => {
   runSequence('json', 'images', 'wxml', 'wxss', 'js', 'wxs', 'cloud', 'watch')
 })
 
+/**
+ * Build
+ */
 gulp.task('build', ['clean'], () => {
   runSequence('json', 'images', 'wxml', 'wxss', 'js', 'wxs', 'cloud')
 })

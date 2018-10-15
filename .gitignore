@@ -1,7 +1,9 @@
+# Dependency directories
 node_modules
 .idea
 .vscode
 
+# Distribution directory
 dist
 
 package-lock.json
