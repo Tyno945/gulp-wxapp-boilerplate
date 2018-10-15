@@ -5,7 +5,6 @@
  * > 小程序支持以`CommonJS`规范组织代码结构
  */
 const wechat = require('./lib/wechat')
-const Promise = require('./lib/bluebird')
 
 App({
   /**
