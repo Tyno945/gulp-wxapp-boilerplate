@@ -1,5 +1,10 @@
 # 小程序 Gulp 开发脚手架
 
+> 一个为微信小程序开发准备的基础骨架
+[refer1](https://github.com/ksky521/gulp-wxapp-boilerplate)
+[refer2](https://github.com/zce/weapp-boilerplate.git)
+
+
 * sass 开发 wxss
 * webfont 自动 base64 引入
 * 支持 px2rpx
@@ -67,6 +72,18 @@ npm run build
 # watch cloud functions 自动同步到 dist/cloud-functions
 ```
 
+## 创建新页面
+
+执行如下命令
+
+```bash
+# 启动生成器
+$ npm run generate
+# 完成每一个问题
+# 自动生成...
+```
+
+由于微信小程序的每一个页面有特定的结构，新建工作比较繁琐。可以通过此任务减少操作。
 
 ## 云函数 mock
 小程序Serverless云的云函数功能很好用，解决了前端开发小程序后端服务的痛点，但是云函数每次修改都要上传部署到线上才能测试，的确是很费时费力，我这里使用了express 做了个 mock server，原理是：
@@ -84,9 +101,16 @@ npm run build
 [使用gulp进行简单的分环境配置](https://segmentfault.com/a/1190000004138375?_ea=503865)
 
 
-## bug
+## 常见bug及解决
 
 1. `npm run build`失败，修改`"build": "gulp build --env prod"`。
 2. `npm run server`失败，原因是缺少"cheerio"模块，安装即可
 3. 自动化生成新页面时，默认是XML，需要将`generate-weapp-page`模块修改成生成WXML文件
 
+## 相关项目
+
+[zce/weapp-demo](https://github.com/zce/weapp-demo)
+
+## 许可
+
+MIT &copy; [Felix]()
