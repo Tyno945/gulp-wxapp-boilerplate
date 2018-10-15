@@ -1,4 +1,14 @@
-/**app.wxss**/
+// Global style write by scss
+// Build to dist/app.wxss
+
+page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: #f9f9f9;
+  font-family: -apple-system-font, 'Helvetica Neue', Helvetica, 'Microsoft YaHei', sans-serif;
+}
 
 .container {
   height: 100%;
