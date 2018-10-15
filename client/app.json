@@ -2,11 +2,12 @@
   "pages": [
     "pages/index/index",
     "pages/demo/demo"
+    // Dont remove this comment
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeApp",
+    "navigationBarTitleText": "WeApp demo",
     "navigationBarTextStyle": "black"
   }
 }

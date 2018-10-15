@@ -86,7 +86,9 @@ function generateJson (options) {
 
 // task start
 gulp.task('json', () => {
-  return gulp.src(`${src}/**/*.json`).pipe(isProd ? jsonminify() : through.obj()).pipe(gulp.dest(dist))
+  return gulp.src(`${src}/**/*.json`)
+    .pipe(jsonminify())
+    .pipe(gulp.dest(dist))
 })
 
 gulp.task('wxml', () => {

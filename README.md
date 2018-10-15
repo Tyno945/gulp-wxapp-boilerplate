@@ -86,4 +86,5 @@ npm run build
 
 1. `npm run build`失败，修改`"build": "gulp build --env prod"`。
 2. `npm run server`失败，原因是缺少"cheerio"模块，安装即可
+3. 自动化生成新页面时，默认是XML，需要将`generate-weapp-page`模块修改成生成WXML文件
 
